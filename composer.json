@@ -1,0 +1,26 @@
+{
+    "name": "stp/redactor-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony Redactor WYSIWYG Form Type",
+    "keywords": [
+        "form", "WYSIWYG", "sonata", "bundle", "editor", "redactor"
+    ],
+    "homepage": "http://github.com/AStepanov/RedactorBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrey Stepanov",
+            "email": "isteep@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "symfony/framework-bundle": ">=2.1"
+    },
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "target-dir": "Stp/RedactorBundle",
+    "autoload": {
+        "psr-0": { "Stp\\RedactorBundle": "" }
+    }
+}

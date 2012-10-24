@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="redactor.service.class">Stp\RedactorBundle\Model\RedactorService</parameter>
+    </parameters>
+
+    <services>
+        <service id="redactor.service" class="%redactor.service.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="form.type.redactor" class="Stp\RedactorBundle\Form\Type\RedactorType">
+            <argument type="service" id="redactor.service" />
+            <tag name="form.type" alias="redactor" />
+        </service>
+
+    </services>
+
+</container>

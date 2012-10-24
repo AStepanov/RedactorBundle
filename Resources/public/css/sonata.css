@@ -1,0 +1,21 @@
+.sonata-collection-row ul,
+.sonata-collection-row input
+{
+    float: left;
+}
+.sonata-collection-row {
+    clear: both;
+}
+
+.sonata-collection-row > div > label {
+    display: none;
+}
+
+.redactor_box {
+    width: 70%;
+}
+
+.redactor_box .redactor_editor
+{
+    float: none !important;
+}
