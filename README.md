@@ -1,23 +1,75 @@
-#How to configure
+# RedactorBundle
 
-1. Add form template
+## Installation for Symfony 2.1
 
-<pre>
-#app/config/config.yml
+### composer.json
+```js
+"require": {
+    ...
+    "stp/redactor-bundle": "dev-master"
+    ...
+},
+"repositories": [
+    {
+        "url": "https://github.com/AStepanov/RedactorBundle.git",
+        "type": "vcs"
+    }
+],
+```
+
+### app/AppKernel.php
+
+```php
+<?php
+public function registerBundles()
+{
+    $bundles = array(
+        // ...
+        new Stp\RedactorBundle\StpRedactorBundle(),
+    );
+}
+```
+
+run the command
+
+```bash
+    php app/console assets:install web
+```
+
+### app/config/confug.yml
+
+```yml
+# Twig Configuration
 twig:
     # ...
     form:
         resources:
             - 'StpRedactorBundle:Redactor:fields.html.twig'
-</pre>
+```
 
-2. Configure Redactor views:
+### To allow uploading files add the following lines to app/config/routing.yml
 
-Run app/console config:dump-reference stp_redactor for check documenttion:
+```yml
+stp_redactor:
+    resource: "@StpRedactorBundle/Controller/"
+    type:     annotation
+    prefix:   /redactor/
+```
 
-Example:
 
-<pre>
+## How to configure
+
+RedactorBundle provide opportunity to configure some different options of using (e.g. admin, comments, blog) 
+
+Run the command for check all config options
+
+```bash
+    php app/console config:dump-reference stp_redactor
+```
+
+### Example:
+
+```yml
 #app/config/config.yml
 stp_redactor:
     admin:
@@ -35,44 +87,44 @@ stp_redactor:
             minHeight: 300
             maxHeight: 900
         role: [ROLE_ADMIN]
-    algorithm:
+    blog:
         upload_image:
-            dir: "%kernel.root_dir%/../web/uploads/content/images"
+            dir: "%kernel.root_dir%/../web/uploads/blog/images"
         role: [IS_AUTHENTICATED_FULLY]
     comments:
-        role: [ROLE_ADMIN, IS_AUTHENTICATED_ANONYMOUSLY]
+        role: [IS_AUTHENTICATED_ANONYMOUSLY]
         settings:
             lang: en
-</pre>
+```
 
-#How to use
+## How to use
 
-## Use in form type
+### Use in Form Type
 
-<pre>
+```twig
 //page_with_redactor.html.twig
 {% block javascripts %}
     {{ parent() }}
-    &lt;script type="text/javascript" src="{{ asset('bundles/pathtojquery/js/jquery.js') }}"></script>
-    &lt;script type="text/javascript" src="{{ asset('bundles/stpredactor/js/redactor.js') }}"></script>
-    &lt;script type="text/javascript" src="{{ asset('bundles/stpredactor/js/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/pathtojquery/js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/stpredactor/js/redactor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/stpredactor/js/script.js') }}"></script>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    &lt;link rel="stylesheet" href="{{ asset('bundles/stpredactor/css/redactor.css') }}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{ asset('bundles/stpredactor/css/redactor.css') }}" type="text/css" media="screen" />
 {% endblock %}
-</pre>
+```
 
-<pre>
-&lt;?php
-//RedactorPageType.php
-namespace Stp\SomeBundle\Form;
+```php
+<?php
+//BlogPostType.php
+namespace Stp\BlogBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface,
     Symfony\Component\Form\AbstractType;
 
-class RedactorPageType extends AbstractType
+class BlogPostType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -81,12 +133,12 @@ class RedactorPageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->add('description', 'redactor', array('redactor' => 'admin'));
+        $builder->add('description', 'redactor', array('redactor' => 'blog'));
     }
 }
-</pre>
+```
 
-## Use in SonataAdminBundle
+### Use in SonataAdminBundle
 Add bundles/stpredactor/css/sonata.css file to sonata layout for avoid some markup issue
 
 
