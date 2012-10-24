@@ -1,5 +1,9 @@
 # RedactorBundle
 
+Bundle is destined to add Redactor WYSIWYG editor to your Symfony2 project.
+
+This bundle does not include original Redactor JavaScript library, for using it you should get it from official website http://imperavi.com/redactor/download/
+
 ## Installation for Symfony 2.1
 
 ### composer.json
@@ -33,7 +37,7 @@ public function registerBundles()
 run the command
 
 ```bash
-    php app/console assets:install web
+php app/console assets:install web
 ```
 
 ### app/config/confug.yml
@@ -64,7 +68,7 @@ RedactorBundle provide opportunity to configure some different options of using 
 Run the command for check all config options
 
 ```bash
-    php app/console config:dump-reference stp_redactor
+php app/console config:dump-reference stp_redactor
 ```
 
 ### Example:
@@ -102,17 +106,18 @@ stp_redactor:
 ### Use in Form Type
 
 ```twig
-//page_with_redactor.html.twig
+{# template_with_redactor.html.twig #}
+
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/pathtojquery/js/jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/stpredactor/js/redactor.js') }}"></script>
+    <script type="text/javascript" src="/path_to_jquery/jquery.js"></script>
+    <script type="text/javascript" src="/path_to_original_redactor/js/redactor.js"></script>
     <script type="text/javascript" src="{{ asset('bundles/stpredactor/js/script.js') }}"></script>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/stpredactor/css/redactor.css') }}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/path_to_original_redactor/css/redactor.css" type="text/css" media="screen" />
 {% endblock %}
 ```
 
@@ -139,6 +144,32 @@ class BlogPostType extends AbstractType
 ```
 
 ### Use in SonataAdminBundle
-Add bundles/stpredactor/css/sonata.css file to sonata layout for avoid some markup issue
 
+#### Create new SonataAdmin layout 
 
+```twig
+{# app/Resources/views/admin_layout.html.twig #}
+
+{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/path_to_original_redactor/css/redactor.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{ asset('bundles/stpredactor/css/sonata.css') }}" type="text/css" media="screen" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="/path_to_original_redactor/js/redactor.js"></script>
+    <script type="text/javascript" src="{{ asset('bundles/stpredactor/js/script.js') }}"></script>
+{% endblock %}
+```
+
+#### Set path to you layout
+
+```yml
+# app/config/config.yml
+sonata_admin:
+    templates:
+        layout: ::admin_layout.html.twig
+```
