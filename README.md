@@ -1,3 +1,5 @@
+# THIS PROJECT IS NO LONGER MAINTAINED
+
 # RedactorBundle
 
 Bundle is destined to add Redactor WYSIWYG editor to your Symfony2 project.
