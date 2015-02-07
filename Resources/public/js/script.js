@@ -23,6 +23,8 @@ $(document).ready(function() {
     for (var redactorId in configRedactor) {
         var config = configRedactor[redactorId];
         prepareConfig(config);
+        // manually adds your plugins if you have some
+        config["plugins"] = ["fullscreen"];
         $("#" + redactorId).redactor(config);
     }
 

@@ -48,7 +48,7 @@ class RedactorType extends AbstractType
     {
         parent::buildView($view, $form, $options);
 
-        $config = $this->redactorService->getWebConfiguration($form->getAttribute('redactor'));
+        $config = $this->redactorService->getWebConfiguration($form->getConfig()->getAttribute('redactor'));
         $view->vars['redactor_config'] = $config;
     }
 
